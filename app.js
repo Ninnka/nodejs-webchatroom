@@ -25,6 +25,7 @@ app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
 var users = {};
+var clientsId = {};
 app.get('/', function (req, res){
   if(req.cookies.user == null){
     res.redirect('/signin');
@@ -56,9 +57,16 @@ io.sockets.on('connection', function (socket){
   socket.on('online', function (data){
     //将上线的用户名存储为 socket 对象的属性，以区分每个 socket 对象，方便后面使用
     socket.name = data.user;
+    //加入test room
+    socket.join('text room');
     //users 对象中不存在该用户名则插入该用户名
     if(!users[data.user]){
       users[data.user] = data.user;
+      var temp;
+      for(var i in io.sockets.adapter.rooms['text room']){
+        temp = i;
+      }
+      clientsId[data.user] = temp;
     }
     ////向所有用户广播该用户上线信息
     io.sockets.emit('online', {
@@ -68,21 +76,23 @@ io.sockets.on('connection', function (socket){
   });
   //转发某人的信息
   socket.on('say', function (data){
-    if(data.to == 'all'){
+    if (data.to == 'all') {
       //向其他所有用户广播该用户发话信息
-      io.sockets.emit('say', data);
-    }else{
-      //向特定用户发送该用户发话信息
-      //clients 为存储所有连接对象的数组
-      var clients = io.sockets.clients();
-      //遍历找到该用户
-      clients.forEach(function (client){
-        if(client.name == data.to){
-          //触发该用户客户端的say事件
-          client.emit('say', data);
+      socket.broadcast.emit('say', data);
+    } else {
+        var clients = io.sockets.adapter.rooms['text room'];
+        //console.log(clients);
+        for (var clientId in clients) {
+          for(var c in clientsId){
+            if(clientsId[c] == clientId){
+              io.sockets.connected[clientId].emit('say', data);
+            }
+            //console.log(clientsId[c]);
+          }
+          //console.log(io.sockets.connected[clientId]);
+          //console.log(clientId);
         }
-      });
-    }
+      }
   });
   //用户下线
   socket.on('disconnect', function(){
