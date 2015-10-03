@@ -30,12 +30,42 @@ app.get('/', function (req, res){
   if(req.cookies.user == null){
     res.redirect('/signin');
   }else{
-    res.sendfile('./views/index.html');
+    var options = {
+      root: __dirname + '/views/',
+      dotfiles: 'deny',
+      headers: {
+        'x-timestamp': Date.now(),
+        'x-sent': true
+      }
+    };
+    res.sendFile('index.html', options, function(err){
+      if(err){
+        console.log(err);
+        res.status(err.status).end();
+      }else{
+        console.log('sent index.html successfully');
+      }
+    });
   }
 });
 
 app.get('/signin', function (req, res){
-  res.sendfile('./views/signin.html');
+  var options = {
+      root: __dirname + '/views/',
+      dotfiles: 'deny',
+      headers: {
+        'x-timestamp': Date.now(),
+        'x-sent': true
+      }
+    };
+    res.sendFile('signin.html', options, function(err){
+      if(err){
+        console.log(err);
+        res.status(err.status).end();
+      }else{
+        console.log('sent signin.html successfully');
+      }
+    });
 });
 
 app.post('/signin', function (req, res){
@@ -100,6 +130,8 @@ io.sockets.on('connection', function (socket){
     if(users[socket.name]){
       //从users对象中删除该用户
       delete users[socket.name];
+      //从clientsId对象中删除该用户
+      delete clientsId[socket.name];
       //通知其他用户该用户已下线
       socket.broadcast.emit('offline', {
         users: users,

@@ -4,7 +4,7 @@ body{
   width: 100%;
   position: absolute;
   float: left;
-  background: url("../images/bj.png") repeat-x #b8b6b6;
+  /*background: url("../images/bj.png") repeat-x #b8b6b6;*/
 }
 a{
   text-decoration: none;

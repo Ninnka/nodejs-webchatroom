@@ -3,21 +3,25 @@
 <head>
 <meta charset="utf-8">
 <title>登录</title>
+<link type="text/css" rel="stylesheet" href="stylesheets/bootstrap.min.css">
 <link type="text/css" rel="stylesheet" href="stylesheets/signin.css">
-<link type="text/css" rel="stylesheet" href="stylesheets/common.css">
+<style type="text/css">
+  .form-signin{
+    max-width: 330px;
+    padding: 15px;
+    margin: 0 auto;
+  }
+  input{
+    margin-bottom : 3px;
+  }
+</style>
 </head>
 <body>
-  <div id="content">
-    <form style="margin-top:70px;" method="post">
-      <div class="form_line">
-        <div class="form_label">昵称：</div>
-        <input type="text" name="name" />
-      </div>
-      <div class="form_line">
-        <div class="form_label"></div>
-        <button class="button gray" type="submit">登录</button>
-        <button class="button gray" type="reset">取消</button>
-      </div>
+  <div class="container" id="content">
+    <form class="form-signin-heading" role="form" method="post">
+      <input type="text" name="name" class="form-control" id="name" placeholder="yourName"/>
+      <button type="submit" class="btn btn-md btn-primary btn-block">Log in</button>
+      <button type="reset" class="btn btn-md btn-primary btn-block">reset</button>
     </form>
   </div>
 </body>

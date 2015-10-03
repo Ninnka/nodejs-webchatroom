@@ -15,13 +15,13 @@
 #content_show{
   position: absolute;
   top: 0;
-  left: 0;
+  left: 30%;
   bottom: 140px;
   right: 0;
 }
 #content_saying{
   position: absolute;
-  left: 0;
+  left: 30%;
   bottom: 0;
   height: 140px;
   right: 0;
@@ -39,8 +39,8 @@
   right: 0;
   left: 0;
   height: 30px;
-  background: #aaa;
-  background: rgba(0,0,0,0.2);
+  /*background: #aaa;
+  background: rgba(0,0,0,0.2);*/
 }
 #usersbar{
   position: absolute;
@@ -102,8 +102,8 @@
   border-radius: 5px;
 }
 .sayingto{
-  background: #ddd;
-  background: rgba(0,0,0,0.3);
+  /*background: #ddd;
+  background: rgba(0,0,0,0.3);*/
   border-radius: 5px;
   color: #39F;
 }
@@ -121,7 +121,7 @@
 }
 #input_content{
   position: absolute;
-  top: 35px;
+  top: 0;
   left: 5px;
   right: 105px;
   bottom: 30px;
@@ -155,7 +155,7 @@
 }
 #say{
   position: absolute;
-  top: 35px;
+  top: 0;
   right: 5px;
   bottom: 5px;
   width: 100px;
@@ -170,4 +170,9 @@
   color: #eee;
   background: #666;
   background: rgba(0,0,0,0.5);
+}
+#logout{
+  position: absolute;
+  left: 15%;
+  top: 10px;
 }
